@@ -1,6 +1,8 @@
 <h1 align="center">Hi 👋, I'm Ömer Faruk KASARCIOĞLU</h1>
 <h3 align="center">A passionate full stack developer from Turkey</h3>
 
+![](github-images.jpg)
+
 - 🌱 I’m currently learning **Django, Python**
 
 - 💬 Ask me about **PHP, Laravel & CodeIgniter**
