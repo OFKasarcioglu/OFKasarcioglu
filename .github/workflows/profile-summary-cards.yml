@@ -1,1 +1,23 @@
+name: GitHub Profile Summary Cards
 
+on:
+  schedule:
+    - cron: "0 3 * * *"   # her gün 03:00 UTC'de günceller
+  workflow_dispatch:       # Actions sekmesinden elle çalıştırmak için
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: generate
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: vn7n24fzkq/github-profile-summary-cards@release
+        env:
+          # Kişisel erişim anahtarı (PAT) repo secret olarak eklenmeli
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_GITHUB_TOKEN }}
+        with:
+          USERNAME: ${{ github.repository_owner }}
+          BRANCH_NAME: "main"
+          UTC_OFFSET: 3
