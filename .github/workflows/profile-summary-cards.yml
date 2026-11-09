@@ -5,18 +5,25 @@ on:
     - cron: "0 3 * * *"   # her gün 03:00 UTC'de günceller
   workflow_dispatch:       # Actions sekmesinden elle çalıştırmak için
 
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-summary-cards
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     name: generate
-    permissions:
-      contents: write
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: vn7n24fzkq/github-profile-summary-cards@release
         env:
-          # Kişisel erişim anahtarı (PAT) repo secret olarak eklenmeli
-          GITHUB_TOKEN: ${{ secrets.SUMMARY_GITHUB_TOKEN }}
+          # SUMMARY_GITHUB_TOKEN (PAT) varsa onu, yoksa varsayılan token'ı kullanır.
+          # Özel repo katkılarının da sayılması için PAT eklemen önerilir.
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
         with:
           USERNAME: ${{ github.repository_owner }}
           BRANCH_NAME: "main"
